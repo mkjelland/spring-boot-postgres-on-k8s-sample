@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <header><title>Hello</title></header>
+    <body>
+        <tr th:if="${value == null}">
+            <div>No value saved</div>
+        </tr>
+        <tr th:if="${value != null}">
+            <div th:text="${value}"></div>
+        </tr>
+
+        <form method="post" action="/save" class="form-actions">
+            <input type="text" name="value" />
+            <input type="submit" value="Save Value" />
+        </form>
+    </body>
+</html>
