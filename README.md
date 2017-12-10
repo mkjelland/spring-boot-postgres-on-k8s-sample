@@ -2,8 +2,8 @@
 
 ## Prerequisites
 
-- Kubernetes cluster with kubectl installer and configured to use your cluster. The Kubernetes cluster must be able to create persistent volumes and external load balancers.
-- docker cli installed, and signed into your Docker Hub account
+- Kubernetes cluster with kubectl installed and configured to use your cluster
+- docker cli installed, you must be signed into your Docker Hub account
 
 ## Deploy Spring Boot app and Postgres on Kubernetes
 
@@ -12,7 +12,7 @@
 kubectl create -f specs/postgres.yml
 ```
 
-1. Create a config map with the hostname of postgres
+1. Create a config map with the hostname of Postgres
 ```
 kubectl create configmap hostname-config --from-literal=postgres_host=$(kubectl get svc postgres -o jsonpath="{.spec.clusterIP}")
 ```
@@ -29,7 +29,7 @@ docker build -t <your Docker Hub account>/spring-boot-postgres-on-k8s:v1 .
 docker push <your Docker Hub account>/spring-boot-postgres-on-k8s:v1
 ```
 
-1. Update the deployment to use your image
+1. Replace `<your Docker Hub account>` with your account name in `specs/spring-boot-app.yml`, then deploy the app
 ```
 kubectl create -f specs/spring-boot-app.yml
 ```
@@ -39,27 +39,25 @@ kubectl create -f specs/spring-boot-app.yml
 kubectl expose deployment spring-boot-postgres-sample --type=LoadBalancer --port=8080
 ```
 
-1. Get the External IP address of Service
+1. Get the External IP address of Service, then the app will be accessible at http://<External IP Address>:8080
 ```
 kubectl get svc spring-boot-postgres-sample
 ```
-
-1. Use your app at http://<External IP Address>:8080
-*** This may take a few minutes to show up
-
-## Updating your application
-
-1. Update the image that the container in your deployment is using
-```
-kubectl set image deployment/spring-boot-postgres-sample spring-boot-postgres-sample=<your Docker Hub account>/spring-boot-postgres-on-k8s:v2
-```
+> **Note:** It may take a few minutes for the load balancer to be created
 
 1. Scale your application
 ```
 kubectl scale deployment spring-boot-postgres-sample --replicas=3
 ```
 
-## Deleting Resources
+## Updating your application
+
+1. Update the image that the containers in your deployment are using
+```
+kubectl set image deployment/spring-boot-postgres-sample spring-boot-postgres-sample=<your Docker Hub account>/spring-boot-postgres-on-k8s:v2
+```
+
+## Deleting the Resources
 
 1. Delete the Spring Boot app deployment
 ```
@@ -76,7 +74,7 @@ kubectl delete svc spring-boot-postgres-sample
 kubectl delete cm hostname-config
 ```
 
-1. Delete postgres
+1. Delete Postgres
 ```
 kubectl delete -f specs/postgres.yml
 ```
