@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spring-boot-sample-web-ui
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: spring-boot-sample-web-ui
+      labels:
+        app: spring-boot-sample-web-ui
+    spec:
+      containers:
+      - name: spring-boot-sample-web-ui
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: postgres_user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: postgres_password
+          - name: POSTGRES_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                name: hostname-config
+                key: postgres_host
+        image: meaghankj/spring-boot-postgres-on-k8s:v1
