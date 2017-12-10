@@ -6,7 +6,6 @@
 - docker cli installed, you must be signed into your Docker Hub account
 
 ## Deploy Spring Boot app and Postgres on Kubernetes
-
 1. Deploy postgres with a persistent volume claim
 ```
 kubectl create -f specs/postgres.yml
@@ -51,14 +50,12 @@ kubectl scale deployment spring-boot-postgres-sample --replicas=3
 ```
 
 ## Updating your application
-
 1. Update the image that the containers in your deployment are using
 ```
 kubectl set image deployment/spring-boot-postgres-sample spring-boot-postgres-sample=<your Docker Hub account>/spring-boot-postgres-on-k8s:v2
 ```
 
 ## Deleting the Resources
-
 1. Delete the Spring Boot app deployment
 ```
 kubectl delete -f specs/spring-boot-app.yml
