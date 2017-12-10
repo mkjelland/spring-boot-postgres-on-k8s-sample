@@ -1,5 +1,7 @@
 # spring-boot-postgres-on-k8s
 
+This demo deploys a simple Spring Boot web application that connects to Postgres onto a Kubernetes cluster. 
+
 ## Prerequisites
 
 - Kubernetes cluster with kubectl installed and configured to use your cluster
