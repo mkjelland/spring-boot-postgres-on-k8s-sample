@@ -2,6 +2,8 @@
 
 This demo deploys a simple Spring Boot web application that connects to Postgres onto a Kubernetes cluster. 
 
+You can watch this demo along with an introduction to Kubernetes concepts [here](https://www.youtube.com/watch?v=OsWXtVbTnv0).
+
 ## Prerequisites
 
 - Kubernetes cluster with kubectl installed and configured to use your cluster
